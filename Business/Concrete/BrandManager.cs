@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Contants;
+using Core.Utilities.Abstract;
+using Core.Utilities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,14 +19,25 @@ namespace Business.Concrete
 			_brandDal = brandDal;
 		}
 
-		public void Add(Brand brand)
+		public IResult Add(Brand brand)
 		{
+			if (brand.Name.Length<2)
+			{
+				return new ErrorResult(); //yalnizca false bilgisi dönecektir
+			}
+
 			_brandDal.Add(brand);
+			return new SuccessResult(Messages.Success); //mesaj bilgisi de dönecektir
 		}
 
-		public void Delete(Brand brand)
+		public IResult Delete(Brand brand)
 		{
+			if (brand.Name.Length < 2)
+			{
+				return new ErrorResult(Messages.Error); 
+			}
 			_brandDal.Delete(brand);
+			return new SuccessResult(Messages.Success); 
 		}
 
 		public List<Brand> GetAll()
@@ -31,9 +45,15 @@ namespace Business.Concrete
 			return _brandDal.GetAll();
 		}
 
-		public void Update(Brand brand)
+		public IResult Update(Brand brand)
 		{
+			if (brand.Name.Length < 2)
+			{
+				return new ErrorResult(Messages.Error);
+			}
 			_brandDal.Update(brand);
+			return new SuccessResult(Messages.Success);
+		
 		}
 	}
 }

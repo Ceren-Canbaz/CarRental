@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace Business.Abstract
 		Car Get(int id);
 		List<Car> GetAllByBrand(int brandId);
 		List<CarDetailDto> GetCarDetail();
-		void Add(Car car);
-		void Update(Car car);
-		void Delete(Car car);
+		IResult Add(Car car);
+		IResult Update(Car car);
+		IResult Delete(Car car);
 
 
 	}

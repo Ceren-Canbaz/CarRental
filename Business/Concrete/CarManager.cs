@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Contants;
 using Core.Entities;
+using Core.Utilities.Abstract;
+using Core.Utilities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,18 +21,33 @@ namespace Business.Concrete
 			_carDal = carDal;
 		}
 
-		public void Add(Car car)
+		public IResult Add(Car car)
 		{
+			if (car.Description.Length <= 3)
+			{
+				return new ErrorResult(Messages.Error);
+			}
 			_carDal.Add(car);
+			return new SuccessResult(Messages.Success);
 		}
-		public void Update(Car car)
+		public IResult Update(Car car)
 		{
+			if (car.Description.Length <= 3)
+			{
+				return new ErrorResult(Messages.Error);
+			}
 			_carDal.Update(car);
+			return new SuccessResult(Messages.Success);
 		}
 
-		public void Delete(Car car)
+		public IResult Delete(Car car)
 		{
+			if (car.Description.Length <= 3)
+			{
+				return new ErrorResult(Messages.Error);
+			}
 			_carDal.Delete(car);
+			return new SuccessResult(Messages.Success);
 		}
 
 		public Car Get(int id)
