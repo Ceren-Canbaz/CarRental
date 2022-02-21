@@ -50,24 +50,28 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.Success);
 		}
 
-		public Car Get(int id)
+		public  IDataResult<Car> Get(int id)
 		{
-			return _carDal.Get(c => c.Id ==id);
+			if (DateTime.Now.Hour==12)
+			{
+				return new ErrorDataResult<Car>(Messages.Error);
+			}
+			return new SuccessDataResult<Car>( _carDal.Get(c => c.Id ==id),Messages.Success);
 		}
 
-		public List<Car> GetAll()
+		public IDataResult<List<Car>> GetAll()
 		{
-			return _carDal.GetAll();
+			return new SuccessDataResult<List<Car>>( _carDal.GetAll(),Messages.Success);
 		}
 
-		public List<Car> GetAllByBrand(int brandId)
+		public IDataResult<List<Car>> GetAllByBrand(int brandId)
 		{
-			return _carDal.GetAll(c => c.BrandId == brandId);
+			return new SuccessDataResult<List<Car>>( _carDal.GetAll(c => c.BrandId == brandId));
 		}
 
-		public List<CarDetailDto> GetCarDetail()
+		public IDataResult<List<CarDetailDto>> GetCarDetail()
 		{
-			return _carDal.GetCarDetails();
+			return new SuccessDataResult<List<CarDetailDto>>( _carDal.GetCarDetails());
 		}
 	}
 }

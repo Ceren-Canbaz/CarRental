@@ -40,9 +40,9 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.Success);
 		}
 
-		public List<Color> GetAll()
+		public IDataResult<List<Color>> GetAll()
 		{
-			return _colorDal.GetAll();
+			return new SuccessDataResult<List<Color>>( _colorDal.GetAll());
 		}
 
 		public IResult Update(Color color)

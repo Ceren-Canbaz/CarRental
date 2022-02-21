@@ -40,9 +40,14 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.Success); 
 		}
 
-		public List<Brand> GetAll()
+		public IDataResult<List<Brand>> GetAll()
 		{
-			return _brandDal.GetAll();
+			if (DateTime.Now.Hour == 22)
+			{
+				return new ErrorDataResult<List<Brand>>(Messages.Error);
+			}
+			//mesajsız constructora gidecektir			//data , true
+			return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
 		}
 
 		public IResult Update(Brand brand)
