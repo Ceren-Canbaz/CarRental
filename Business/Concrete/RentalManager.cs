@@ -4,6 +4,7 @@ using Core.Utilities.Abstract;
 using Core.Utilities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,10 +23,11 @@ namespace Business.Concrete
 		public IResult Add(Rental rental)
 		{
 			//true ise kiralanmış anlamına geliyor
-			if (rental.Situation == true)
+			if (rental.RentSituation == true)
 			{
 				return new ErrorResult(Messages.Error);
 			}
+			rental.RentSituation = true;
 			_rentalDal.Add(rental);
 			return new SuccessResult(Messages.Success);
 		}
@@ -45,6 +47,11 @@ namespace Business.Concrete
 		{
 			
 			return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id),Messages.Success);
+		}
+
+		public IDataResult<List<RentalDetailsDto>> GetRentalDetail()
+		{
+			return new SuccessDataResult<List<RentalDetailsDto>>(_rentalDal.GetRentalDetails());
 		}
 
 		public IResult Update(Rental rental)

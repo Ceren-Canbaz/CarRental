@@ -11,18 +11,56 @@ namespace ConsoleApp1
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("CarTest \n");
-			CarTest();
-			Console.WriteLine("\nCarDtoTest\n");
-			CarDtoTest();
-			Console.WriteLine("\nCarAddTest\n");
-			CarAddTest();
+			//CarTest();
+			//CarDtoTest();
+			//CarAddTest();
 			//CarUpdateTest();
 			//CarDeleteTest();
 			//ColorTest();
 			//BrandTest();
-			
+			//RentAddTest();
+			//CustomerAddTest();
+			//RentalDetailDto();
 
+		}
+
+		private static void RentalDetailDto()
+		{
+			RentalManager rentalManager = new RentalManager(new EfRentalDal());
+			var result = rentalManager.GetRentalDetail().Data;
+			foreach (var rental in result)
+			{
+				Console.WriteLine(rental.RentalId);
+				Console.WriteLine(rental.CarId);
+				Console.WriteLine(rental.CarName);
+				Console.WriteLine(rental.CustomerId);
+				Console.WriteLine(rental.CustomerName);
+				Console.WriteLine(rental.RentDate);
+				Console.WriteLine(rental.ReturnDate);
+			}
+		}
+
+		private static void CustomerAddTest()
+		{
+			CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+			Customer customer = new Customer
+			{
+				CompanyName = "Canmaksan"
+			};
+			customerManager.Add(customer);
+		}
+
+		private static void RentAddTest()
+		{
+			RentalManager rentalManager = new RentalManager(new EfRentalDal());
+			Rental rental = new Rental
+			{
+				CarId = 3,
+				CustomerId = 1,
+				RentDate = DateTime.Now,
+
+			};
+			rentalManager.Add(rental);
 		}
 
 		private static void CarDeleteTest()
